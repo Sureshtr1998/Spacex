@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
+import Loader from '../components/Loader'
 import { register } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import PropTypes from 'prop-types'
@@ -16,9 +17,8 @@ const RegisterScreen = ({ location, history }) => {
 
   const dispatch = useDispatch()
 
-  const userLogin = useSelector(state => state.userLogin)
-
-  const { userInfo } = userLogin
+  const userRegister = useSelector(state => state.userRegister)
+  const { loading, error, userInfo } = userRegister
 
   const redirect = location.search ? location.search.split('=')[1] : '/'
 
@@ -41,6 +41,8 @@ const RegisterScreen = ({ location, history }) => {
             <h1> Sign Up</h1>
             {/* if you domn't have to display anything in else comndition at that time use && */}
             {message && <Message variant='danger'> {message}</Message> }
+            {error && <Message variant='danger'> {error}</Message> }
+            {loading && <Loader/>}
             <Form onSubmit={submithandler}>
 
             <Form.Group controlId='name'>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { logout } from '../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
+import { applyFilter } from '../actions/filterActions'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -38,6 +39,10 @@ const Header = () => {
     setTo(e.target.value)
   }
 
+  useEffect(() => {
+    dispatch(applyFilter(val, from, to, upcoming, past))
+  }, [dispatch, val, from, to, upcoming, past])
+
   const logoutHandler = () => {
     dispatch(logout())
   }
@@ -52,10 +57,11 @@ const Header = () => {
         <Form.Control type='text' value={val} onChange={e => submitHandler(e)} placeholder='Search Products...'
         className='mr-sm-2 ml-sm-5'>
         </Form.Control>
-        <Form.Control type='date' value={from} onChange={e => fromDate(e)} placeholder='From: DD-Jan-YYYY'
+        <Form.Control type='date' value={from} onChange={e => fromDate(e)}
         className='mr-sm-2 ml-sm-5'>
         </Form.Control>
-        <Form.Control type='date' value={to} onChange={e => toDate(e)} placeholder='To: DD-Jan-YYYY'
+       <p className='text-white text-xl pl-8'> - </p>
+        <Form.Control type='date' value={to} onChange={e => toDate(e)}
         className='mr-sm-2 ml-sm-5'>
         </Form.Control>
         <div className='ml-12 text-black'>

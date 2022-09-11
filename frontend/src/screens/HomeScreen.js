@@ -13,6 +13,9 @@ const HomeScreen = ({ history }) => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
+  const filter = useSelector(state => state.filterData)
+  const { launchList } = filter
+
   const launchData = useSelector(state => state.launchData)
   const { launchInfo } = launchData
 
@@ -25,9 +28,15 @@ const HomeScreen = ({ history }) => {
       history.push('/')
     }
   }, [dispatch, history, userInfo, launchInfo])
+  let mapData = []
+  if (launchList) {
+    mapData = launchList
+  } else {
+    mapData = launchInfo
+  }
   return <div >
         <Row className='mt-8 launches'>
-            {launchInfo?.map((launch, index) => {
+            {mapData?.map((launch, index) => {
               return (
                 <Col key={launch.flight_number + '_' + index} sm={12} md ={6} lg={4} xl={3}>
                 <LaunchData launch={launch}/>

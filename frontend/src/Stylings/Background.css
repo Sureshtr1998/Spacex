@@ -7,13 +7,14 @@
 
 body{
     font-family: 'Exo', sans-serif;
+    overflow-y: hidden;
 }
 
 
 .context {
     width: 100%;
     position: absolute;
-    top:10vh;
+    top:5vh;
     z-index: 10;
 }
 

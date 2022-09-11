@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../actions/userActions'
 import { fetchData } from '../actions/launchActions'
 // import Message from '../components/Message'
 // import Loader from '../components/Loader'
 import PropTypes from 'prop-types'
+import { Row, Col } from 'react-bootstrap'
+import LaunchData from '../components/LaunchData'
 
 const HomeScreen = ({ history }) => {
   const dispatch = useDispatch()
-
-  const logoutHandler = () => {
-    dispatch(logout())
-  }
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -28,9 +25,16 @@ const HomeScreen = ({ history }) => {
       history.push('/')
     }
   }, [dispatch, history, userInfo, launchInfo])
-  return <div>
-        <h1 className='text-red-800'>HOME SCREEN </h1>
-        <p className='cursor-pointer text-red-800' onClick={logoutHandler}> Logout</p>
+  return <div >
+        <Row className='mt-8 launches'>
+            {launchInfo?.map((launch, index) => {
+              return (
+                <Col key={launch.flight_number + '_' + index} sm={12} md ={6} lg={4} xl={3}>
+                <LaunchData launch={launch}/>
+                </Col>
+              )
+            })}
+        </Row>
     </div>
 }
 
